@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-app
+  labels:
+    app: nodsjs-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-app
+  template:
+    metadata:
+      labels:
+        app: nodejs-app
+    spec:
+      containers:
+        - name: nodejs-app
+          # image: 397077988063.dkr.ecr.us-east-2.amazonaws.com/primuslearning:1.1
+          image: vanshu07/my-nodejs-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3001
+
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-app
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 3001
+      protocol: TCP
+  selector:
+    app: primuslearning
+
+
