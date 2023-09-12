@@ -64,19 +64,19 @@
 pipeline {
     agent any
     
-    // stages {
-    //     stage('Build Maven') {
-    //         steps {
-    //             checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/dheeraj07-borawat/nodejs-k8sinfra.git'  ]]])
-    //         }
-    //     }
-
-        stage('Build') {
+    stages {
+        stage('Build Maven') {
             steps {
-                // Build the Node.js application
-                sh 'npm install' // Or use yarn if you prefer
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/dheeraj07-borawat/nodejs-k8sinfra.git'  ]]])
             }
         }
+
+        // stage('Build') {
+        //     steps {
+        //         // Build the Node.js application
+        //         sh 'npm install' // Or use yarn if you prefer
+        //     }
+        // }
         
         stage('Build Docker Image') {
             steps {
