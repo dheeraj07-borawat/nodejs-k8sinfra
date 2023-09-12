@@ -65,18 +65,18 @@ pipeline {
     agent any
     
     stages {
-        stage('Build Maven') {
+        stage('Git Clone') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/dheeraj07-borawat/nodejs-k8sinfra.git'  ]]])
+                git credentialsId: 'GIT_CREDENTIALS', url: 'https://github.com/dheeraj07-borawat/nodejs-k8sinfra.git'
             }
         }
 
-        // stage('Build') {
-        //     steps {
-        //         // Build the Node.js application
-        //         sh 'npm install' // Or use yarn if you prefer
-        //     }
-        // }
+        stage('Build') {
+            steps {
+                // Build the Node.js application
+                sh 'npm install' // Or use yarn if you prefer
+            }
+        }
         
         stage('Build Docker Image') {
             steps {
