@@ -27,17 +27,17 @@ pipeline {
             }
         }
         
-        // stage("deploy to k8s") {
-        //     steps {
-        //         echo "Deploying to Kubernetes cluster"
-        //         withCredentials([file(credentialsId: 'my_kubernetes', variable: 'KUBECONFIG')]) {
-        //             sh """
-        //             export KUBECONFIG=\${KUBECONFIG}
-        //             kubectl apply -f app.yml --kubeconfig=\${KUBECONFIG}
-        //             """
-        //         }
-        //     }
-        // }
+        stage("deploy to k8s") {
+            steps {
+                echo "Deploying to Kubernetes cluster"
+                withCredentials([file(credentialsId: 'my_kubernetes', variable: 'KUBECONFIG')]) {
+                    sh """
+                    export KUBECONFIG=\${KUBECONFIG}
+                    kubectl apply -f app.yml --kubeconfig=\${KUBECONFIG}
+                    """
+                }
+            }
+        }
     }
 }
 
