@@ -40,7 +40,9 @@ pipeline {
                 echo "Deploying to Minikube cluster"
                 withCredentials([file(credentialsId: 'my_kubernetes', variable: 'KUBECONFIG')]) {
                     // sh "export KUBECONFIG=\${KUBECONFIG} && kubectl apply -f app.yml && kubectl apply -f service.yml"
-                    sh "export KUBECONFIG=/usr/bin/jenkins && kubectl apply -f app.yml && kubectl apply -f service.yml"
+                    sh "export KUBECONFIG=/usr/bin/jenkins"
+                    sh "export KUBECONFIG=${KUBECONFIG}"
+                    sh "kubectl apply -f app.yml && kubectl apply -f service.yml"
                 }
             }
         }
