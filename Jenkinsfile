@@ -27,21 +27,22 @@ pipeline {
             }
         }
 
-        stage("deploy to k8s") {
-            steps {
-                echo "Deploying to Minikube cluster"
-                sh "kubectl apply -f app.yml"
-                sh "kubectl apply -f service.yml"
-            }
-        }
-        
         // stage("deploy to k8s") {
         //     steps {
         //         echo "Deploying to Minikube cluster"
-        //         withCredentials([file(credentialsId: 'my_kubernetes', variable: 'KUBECONFIG')]) {
-        //             sh "export KUBECONFIG=\${KUBECONFIG} && kubectl apply -f app.yml && kubectl apply -f service.yml"
-        //         }
+        //         sh "kubectl apply -f app.yml"
+        //         sh "kubectl apply -f service.yml"
         //     }
         // }
+        
+        stage("deploy to k8s") {
+            steps {
+                echo "Deploying to Minikube cluster"
+                withCredentials([file(credentialsId: 'my_kubernetes', variable: 'KUBECONFIG')]) {
+                    // sh "export KUBECONFIG=\${KUBECONFIG} && kubectl apply -f app.yml && kubectl apply -f service.yml"
+                    sh "export KUBECONFIG=/usr/bin/jenkins && kubectl apply -f app.yml && kubectl apply -f service.yml"
+                }
+            }
+        }
     }
 }
